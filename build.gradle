@@ -1,0 +1,38 @@
+plugins {
+    id 'groovy'
+}
+
+// Not using standard layout, need to specify folders.
+sourceSets {
+    test {
+        groovy {
+            srcDirs = ['tests']
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+
+    // hubitat_ci repository
+    maven {
+        url 'https://maven.pkg.github.com/joelwetzel/hubitat_ci'
+        credentials {
+            username "anonymous"
+            password "${System.env.MAVENKEY}"
+        }
+    }
+}
+
+// tasks.withType(Test) {
+//     doFirst {
+//         println "*** ENVIRONMENT VARIABLE DUMP ***"
+//         environment.each { k, v -> println "${k}:${v}" }
+//     }
+// }
+
+dependencies {
+    testImplementation 'org.codehaus.groovy:groovy-all:2.5.4' // groovy itself
+    testImplementation "org.spockframework:spock-core:1.2-groovy-2.5" // spock framework
+    testImplementation "me.biocomp.hubitat_ci:hubitat_ci:0.25" // hubita_ci
+}

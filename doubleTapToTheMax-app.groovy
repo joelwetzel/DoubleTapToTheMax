@@ -76,7 +76,7 @@ def enableLogging = [
 
 
 preferences {
-	page(name: "mainPage", title: "", install: true, uninstall: true) {
+	page(name: "mainPage", title: "Preferences", install: true, uninstall: true) {
 		section(getFormat("title", "Double Tap to the Max")) {
             paragraph "If you don't want to wait and hold a dimmer paddle while it raises or lowers, this app lets you go to max or min brightness with double-taps.  It was created so that I wouldn't have to create individual Rule Machine rules for every dimmer in my house.  It takes advantage of how most dimmer drivers report double-tapping.  Generally, double-tap up is reported as button 1, and double-tap down is button 2."
 		}
@@ -118,16 +118,20 @@ def initialize() {
 
 def doubleTapUpHandler(evt) {
     log "doubleTapUpHandler event:${evt.name},${evt.value},${evt.deviceId}"
-    
-	def triggeredDevice = dimmers.find { it.deviceId == evt.deviceId }
-    triggeredDevice.setLevel(maxValue)
+
+    if (enableMax) {
+        def triggeredDevice = dimmers.find { it.deviceId == evt.deviceId }
+        triggeredDevice.setLevel(maxValue)
+    }
 }
 
 def doubleTapDownHandler(evt) {
     log "doubleTapDownHandler event:${evt.name},${evt.value},${evt.deviceId}"
-    
-	def triggeredDevice = dimmers.find { it.deviceId == evt.deviceId }
-    triggeredDevice.setLevel(minValue)
+
+    if (enableMin) {
+        def triggeredDevice = dimmers.find { it.deviceId == evt.deviceId }
+        triggeredDevice.setLevel(minValue)
+    }
 }
 
 
@@ -141,7 +145,7 @@ def display(){
 	section() {
 		paragraph getFormat("line")
 		paragraph "<div style='color:#1A77C9;text-align:center'>Double Tap to the Max - @joelwetzel<br><a href='https://github.com/joelwetzel/' target='_blank'>Click here for more Hubitat apps/drivers on my GitHub!</a></div>"
-	}       
+	}
 }
 
 def log(msg) {
@@ -149,5 +153,3 @@ def log(msg) {
 		log.debug msg
 	}
 }
-
-
