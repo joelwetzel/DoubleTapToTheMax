@@ -1,6 +1,6 @@
 package joelwetzel.dimmer_minimums.tests
 
-import me.biocomp.hubitat_ci.util.device_fixtures.DimmerFixture
+import me.biocomp.hubitat_ci.util.device_fixtures.DimmerFixtureFactory
 import me.biocomp.hubitat_ci.util.AppExecutorWithEventForwarding
 
 import me.biocomp.hubitat_ci.api.app_api.AppExecutor
@@ -35,14 +35,14 @@ class DoubleTapTests extends Specification {
 
     void "Double-tap up maxes the dimmer"() {
         given:
-        def dimmerFixture = DimmerFixture.create('n')
+        def dimmerFixture = DimmerFixtureFactory.create('n')
 
         // Run the app sandbox, passing the virtual dimmer device in.
         def appScript = sandbox.run(api: appExecutor,
             userSettingValues: [dimmers: [dimmerFixture], enableMax: true, enableMin: true, maxValue: 100, minValue: 5, enableLogging: true],
         )
         appExecutor.setSubscribingScript(appScript)
-        dimmerFixture.initialize(appExecutor, appScript, [switch: "off", level: 10])
+        dimmerFixture.initialize(appExecutor, [switch: "off", level: 10])
 
         when:
         appScript.installed()
@@ -55,14 +55,14 @@ class DoubleTapTests extends Specification {
 
     void "Max can be disabled"() {
         given:
-        def dimmerFixture = DimmerFixture.create('n')
+        def dimmerFixture = DimmerFixtureFactory.create('n')
 
         // Run the app sandbox, passing the virtual dimmer device in.
         def appScript = sandbox.run(api: appExecutor,
             userSettingValues: [dimmers: [dimmerFixture], enableMax: false, enableMin: true, maxValue: 100, minValue: 5, enableLogging: true],
         )
         appExecutor.setSubscribingScript(appScript)
-        dimmerFixture.initialize(appExecutor, appScript, [switch: "off", level: 10])
+        dimmerFixture.initialize(appExecutor, [switch: "off", level: 10])
 
         when:
         appScript.installed()
@@ -75,14 +75,14 @@ class DoubleTapTests extends Specification {
 
     void "Double-tap down mins the dimmer"() {
         given:
-        def dimmerFixture = DimmerFixture.create('n')
+        def dimmerFixture = DimmerFixtureFactory.create('n')
 
         // Run the app sandbox, passing the virtual dimmer device in.
         def appScript = sandbox.run(api: appExecutor,
             userSettingValues: [dimmers: [dimmerFixture], enableMax: true, enableMin: true, maxValue: 100, minValue: 5, enableLogging: true],
         )
         appExecutor.setSubscribingScript(appScript)
-        dimmerFixture.initialize(appExecutor, appScript, [switch: "on", level: 50])
+        dimmerFixture.initialize(appExecutor, [switch: "on", level: 50])
 
         when:
         appScript.installed()
@@ -95,14 +95,14 @@ class DoubleTapTests extends Specification {
 
     void "Min can be disabled"() {
         given:
-        def dimmerFixture = DimmerFixture.create('n')
+        def dimmerFixture = DimmerFixtureFactory.create('n')
 
         // Run the app sandbox, passing the virtual dimmer device in.
         def appScript = sandbox.run(api: appExecutor,
             userSettingValues: [dimmers: [dimmerFixture], enableMax: true, enableMin: false, maxValue: 100, minValue: 5, enableLogging: true],
         )
         appExecutor.setSubscribingScript(appScript)
-        dimmerFixture.initialize(appExecutor, appScript, [switch: "on", level: 50])
+        dimmerFixture.initialize(appExecutor, [switch: "on", level: 50])
 
         when:
         appScript.installed()
@@ -115,14 +115,14 @@ class DoubleTapTests extends Specification {
 
     void "Double-tap down mins the dimmer, even if off"() {
         given:
-        def dimmerFixture = DimmerFixture.create('n')
+        def dimmerFixture = DimmerFixtureFactory.create('n')
 
         // Run the app sandbox, passing the virtual dimmer device in.
         def appScript = sandbox.run(api: appExecutor,
             userSettingValues: [dimmers: [dimmerFixture], enableMax: true, enableMin: true, maxValue: 100, minValue: 5, enableLogging: true],
         )
         appExecutor.setSubscribingScript(appScript)
-        dimmerFixture.initialize(appExecutor, appScript, [switch: "off", level: 50])
+        dimmerFixture.initialize(appExecutor, [switch: "off", level: 50])
 
         when:
         appScript.installed()
@@ -137,8 +137,8 @@ class DoubleTapTests extends Specification {
     void "doubleTapUpHandler() adjusts correct dimmer from among multiple devices"() {
         given:
         // Define two virtual dimmer devices
-        def dimmerFixture1 = DimmerFixture.create('n1')
-        def dimmerFixture2 = DimmerFixture.create('n2')
+        def dimmerFixture1 = DimmerFixtureFactory.create('n1')
+        def dimmerFixture2 = DimmerFixtureFactory.create('n2')
 
         // Run the app sandbox, passing the virtual dimmer devices in.
         def appScript = sandbox.run(api: appExecutor,
@@ -146,8 +146,8 @@ class DoubleTapTests extends Specification {
         )
         appExecutor.setSubscribingScript(appScript)
 
-        dimmerFixture1.initialize(appExecutor, appScript, [switch: "off", level: 50])
-        dimmerFixture2.initialize(appExecutor, appScript, [switch: "off", level: 50])
+        dimmerFixture1.initialize(appExecutor, [switch: "off", level: 50])
+        dimmerFixture2.initialize(appExecutor, [switch: "off", level: 50])
 
         when:
         appScript.installed()

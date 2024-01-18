@@ -16,10 +16,10 @@ repositories {
 
     // hubitat_ci repository
     maven {
-        url 'https://maven.pkg.github.com/joelwetzel/hubitat_ci'
+        url System.getenv("MAVEN_ENDPOINT")
         credentials {
             username "anonymous"
-            password "${System.env.MAVENKEY}"
+            password System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN")
         }
     }
 }
@@ -34,6 +34,6 @@ repositories {
 dependencies {
     testImplementation 'org.codehaus.groovy:groovy-all:2.5.4' // groovy itself
     testImplementation "org.spockframework:spock-core:1.2-groovy-2.5" // spock framework
-    testImplementation "me.biocomp.hubitat_ci:hubitat_ci:0.32" // hubita_ci
+    testImplementation "me.biocomp.hubitat_ci:hubitat_ci:0.34" // hubitat_ci
     testImplementation group: 'cglib', name: 'cglib-nodep', version: '3.3.0'
 }
