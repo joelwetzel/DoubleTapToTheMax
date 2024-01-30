@@ -1,7 +1,7 @@
 package joelwetzel.double_tap_to_the_max.tests
 
 import me.biocomp.hubitat_ci.util.device_fixtures.DimmerFixtureFactory
-import me.biocomp.hubitat_ci.util.AppExecutorWithEventForwarding
+import me.biocomp.hubitat_ci.util.IntegrationAppExecutor
 
 import me.biocomp.hubitat_ci.api.app_api.AppExecutor
 import me.biocomp.hubitat_ci.api.common_api.Log
@@ -29,7 +29,7 @@ class BasicTests extends Specification {
     // Create mock log
     def log = Mock(Log)
 
-    def appExecutor = Spy(AppExecutorWithEventForwarding) {
+    def appExecutor = Spy(IntegrationAppExecutor) {
         _*getLog() >> log
     }
 
