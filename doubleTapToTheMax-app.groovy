@@ -1,5 +1,5 @@
 /**
- *  Double Tap to the Max v1.0
+ *  Double Tap to the Max v1.3
  *
  *  Copyright 2021 Joel Wetzel
  *
