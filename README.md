@@ -31,7 +31,7 @@ The test reports can be found in the `build/reports/tests/test/` directory after
 ### Continuous Integration
 
 This repository uses GitHub Actions to automatically run tests on every push and pull request. The CI workflow:
-- Runs all unit tests
+- Runs all integration tests
 - Generates test reports
 - Uploads test results as artifacts
 
